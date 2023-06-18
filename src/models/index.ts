@@ -1,6 +1,6 @@
-const dbConfig = require("../config/db.config.js");
+import { Sequelize } from "sequelize";
 
-const Sequelize = require("sequelize");
+const dbConfig = require("../config/db.config.js");
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -19,16 +19,21 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   // pool: {
   //   max: dbConfig.pool.max,
   //   min: dbConfig.pool.min,
-  //   acquire: dbConfig.pool.acquire,x
+  //   acquire: dbConfig.pool.acquire,
   //   idle: dbConfig.pool.idle
   // }
 });
 
-const db = {};
+interface DB {
+  Sequelize: typeof Sequelize;
+  sequelize: Sequelize;
+  product: any; // Replace 'any' with the actual type of the product model
+}
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+const db: DB = {
+  Sequelize,
+  sequelize,
+  product: require("./product.model.js")(sequelize, Sequelize),
+};
 
-db.product = require("./product.model.js")(sequelize, Sequelize);
-
-module.exports = db;
+export default db;

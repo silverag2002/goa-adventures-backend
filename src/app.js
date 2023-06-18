@@ -1,20 +1,26 @@
 const express = require("express");
 const helmet = require("helmet");
-const mongoSanitize = require("express-mongo-sanitize");
+
 const compression = require("compression");
 const cors = require("cors");
 const passport = require("passport");
 const httpStatus = require("http-status");
 require("dotenv").config();
-const indianCity = require("./controllers/products.controller");
+const routes = require("./routes/v1");
 
 const app = express();
 
 // set security HTTP headers
+
+app.set("view engine", "ejs");
 app.use(helmet());
 
-// sanitize request data
-app.use(mongoSanitize());
+app.use(express.urlencoded({ extended: true }));
+
+// app.use("/v1", routes);
+// app.get("/", (req, res) => {
+//   res.status(200).send({ status: "Ok" });
+// });
 
 // gzip compression
 app.use(compression());
@@ -25,19 +31,13 @@ app.options("*", cors());
 
 // jwt authentication
 app.use(passport.initialize());
-// passport.use('jwt', jwtStrategy);
 
-const User = require("./User");
-// const app = express();
-const PORT = 5000;
-
-app.get("/", (req, res) => {
-  res.send({ message: "endpoint working" });
-});
+// v1 api routes
+app.use("/v1", routes);
+console.log("Routes over");
 
 // new: route to users, that runs readAll()
-app.get("/users", indianCity.findAll);
 
-app.listen(PORT, () => {
-  console.log(`Server running at: http://localhost:${PORT}/`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running at: http://localhost:${process.env.PORT}/`);
 });
