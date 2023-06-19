@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
-interface BlogAttributes {
+interface ProductAttributes {
   id: number;
   title: string;
   video: string;
@@ -26,7 +26,7 @@ interface BlogAttributes {
 }
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Blog extends Model<BlogAttributes> implements BlogAttributes {
+  class Product extends Model<ProductAttributes> implements ProductAttributes {
     public id!: number;
     public title!: string;
     public video!: string;
@@ -55,7 +55,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     }
   }
 
-  Blog.init(
+  Product.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -129,10 +129,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: "Blog",
+      modelName: "Product",
       tableName: "products",
     }
   );
 
-  return Blog;
+  return Product;
 };

@@ -33,6 +33,7 @@ app.use(passport.initialize());
 app.use("/v1", routes);
 console.log("Routes over");
 app.get("/", (req: any, res: any) => {
+  console.log("PRocess", process.env.DATABASE_HOST!);
   res.status(200).send({ status: "Ok" });
 });
 

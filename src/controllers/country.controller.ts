@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import db from "../models";
 
-const Product = db.product;
+const Country = db.countries;
 
 // Create and Save a new blog
 export const create = async (req: Request, res: Response): Promise<void> => {
@@ -13,7 +13,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Save blog in the database
-    const data = await Product.create(req.body);
+    const data = await Country.create(req.body);
     res.send(data);
   } catch (err: any) {
     res.status(500).send({
@@ -28,7 +28,7 @@ export const findAll = async (req: Request, res: Response): Promise<void> => {
     const content = req.query.content;
     const condition = content ? { state_name: content } : null;
 
-    const data = await Product.findAll({ where: condition });
+    const data = await Country.findAll({ where: condition });
     res.send(data);
   } catch (err: any) {
     console.log(err);
@@ -42,7 +42,7 @@ export const findOne = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;
 
-    const data = await Product.findByPk(id);
+    const data = await Country.findByPk(id);
     if (!data) {
       res.status(404).send({ message: "Not found blog with id " + id });
     } else {
@@ -57,42 +57,42 @@ export const update = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;
 
-    const [rowsUpdated] = await Product.update(req.body, {
+    const [rowsUpdated] = await Country.update(req.body, {
       where: { id: id },
     });
 
     if (rowsUpdated === 0) {
       res.status(404).send({
-        message: `Cannot update Product with id=${id}. Maybe Product was not found!`,
+        message: `Cannot update Country with id=${id}. Maybe Country was not found!`,
       });
     } else {
-      res.send({ message: "Product was updated successfully." });
+      res.send({ message: "Country was updated successfully." });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Error updating Product with id=",
+      message: "Error updating Country with id=",
     });
   }
 };
 
-export const deleteProduct = async (
+export const deleteCountry = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const id = req.params.id;
 
-    const rowsDeleted = await Product.destroy({
+    const rowsDeleted = await Country.destroy({
       where: { id: id },
     });
 
     if (rowsDeleted === 0) {
       res.status(404).send({
-        message: `Cannot delete Product with id=${id}. Maybe Product was not found!`,
+        message: `Cannot delete Country with id=${id}. Maybe Country was not found!`,
       });
     } else {
       res.send({
-        message: "Product was deleted successfully!",
+        message: "Country was deleted successfully!",
       });
     }
   } catch (err) {
@@ -104,13 +104,13 @@ export const deleteProduct = async (
 
 export const deleteAll = async (req: Request, res: Response): Promise<void> => {
   try {
-    const rowsDeleted = await Product.destroy({
+    const rowsDeleted = await Country.destroy({
       where: {},
       truncate: false,
     });
 
     res.send({
-      message: `${rowsDeleted} Products were deleted successfully!`,
+      message: `${rowsDeleted} Countrys were deleted successfully!`,
     });
   } catch (err: any) {
     res.status(500).send({
@@ -124,7 +124,7 @@ export const findAllPublished = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await Product.findAll({ where: { published: true } });
+    const data = await Country.findAll({ where: { published: true } });
     res.send(data);
   } catch (err: any) {
     res.status(500).send({
