@@ -3,13 +3,13 @@
 
 // const Pool = require("pg").Pool;
 
-const db = require("./app/models");
+const db = require("./models");
 db.sequelize
   .authenticate()
   .then(() => {
     console.log("Connected to the database!");
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.log("Cannot connect to the database!", err);
     process.exit();
   });

@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize";
 
-const dbConfig = require("../config/db.config.js");
+const dbConfig = require("../config/db.config.ts");
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
+  dialect: "postgres",
   dialectOptions: {
-    ssl: true && {
+    ssl: false && {
       key: undefined,
       cert: undefined,
       ca: undefined,
@@ -24,6 +24,17 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   // }
 });
 
+async function test() {
+  const data = await sequelize.authenticate();
+  console.log("resul;y", data);
+}
+try {
+  test();
+  console.log("Connection has been established successfully.");
+} catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
+
 interface DB {
   Sequelize: typeof Sequelize;
   sequelize: Sequelize;
@@ -33,7 +44,7 @@ interface DB {
 const db: DB = {
   Sequelize,
   sequelize,
-  product: require("./product.model.js")(sequelize, Sequelize),
+  product: require("./product.model.ts")(sequelize, Sequelize),
 };
 
 export default db;

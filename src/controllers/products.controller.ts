@@ -23,6 +23,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const findAll = async (req: Request, res: Response): Promise<void> => {
+  console.log("hitted");
   try {
     const content = req.query.content;
     const condition = content ? { state_name: content } : null;
@@ -30,6 +31,7 @@ export const findAll = async (req: Request, res: Response): Promise<void> => {
     const data = await Blog.findAll({ where: condition });
     res.send(data);
   } catch (err: any) {
+    console.log(err);
     res.status(500).send({
       message: err.message || "Some error occurred while retrieving blogs.",
     });

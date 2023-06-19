@@ -4,6 +4,7 @@ const dbConfig = {
   PASSWORD: process.env.DATABASE_PASSWORD!,
   DB: process.env.DATABASE_NAME!,
   dialect: "postgres",
+
   // declaring pool is optional
   // pool: {
   //   max: 5,

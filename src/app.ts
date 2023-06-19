@@ -18,9 +18,6 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 
 // app.use("/v1", routes);
-// app.get("/", (req, res) => {
-//   res.status(200).send({ status: "Ok" });
-// });
 
 // gzip compression
 app.use(compression());
@@ -35,6 +32,9 @@ app.use(passport.initialize());
 // v1 api routes
 app.use("/v1", routes);
 console.log("Routes over");
+app.get("/", (req: any, res: any) => {
+  res.status(200).send({ status: "Ok" });
+});
 
 // new: route to users, that runs readAll()
 
