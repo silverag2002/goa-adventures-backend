@@ -7,11 +7,11 @@ const Product = db.product;
 export const create = async (req: Request, res: Response): Promise<void> => {
   try {
     // Validate request
-    if (!req.body.content) {
+    if (!req.body) {
       res.status(400).send({ message: "Content can not be empty!" });
       return;
     }
-
+    console.log("Requst", req.body);
     // Save blog in the database
     const data = await Product.create(req.body);
     res.send(data);

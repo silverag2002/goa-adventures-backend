@@ -17,6 +17,8 @@ app.use(helmet());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.json({ limit: "50mb", extended: true }));
+
 // app.use("/v1", routes);
 
 // gzip compression

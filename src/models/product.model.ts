@@ -1,10 +1,10 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 interface ProductAttributes {
-  id?: number;
+  // id: number;
   title: string;
-  gallery: string;
-  featured_image: string;
+  // gallery: string;
+  // featured_image: string;
   allow_cancel: string;
   video: string;
   overview: string;
@@ -14,7 +14,7 @@ interface ProductAttributes {
   category: string;
   category_type: string;
   city: string;
-  country: string;
+  // country: string;
   min_people: number;
   booking_period: number;
   max_people: number;
@@ -28,12 +28,12 @@ interface ProductAttributes {
   start_time: String;
   createdAt: Date;
   updatedAt: Date;
-  last_update_by: string;
+  // last_update_by: string;
 }
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Product extends Model<ProductAttributes> implements ProductAttributes {
-    public id!: number;
+    // public id!: number;
     public title!: string;
     public video!: string;
     public overview!: string;
@@ -42,8 +42,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public state!: string;
     public category!: string;
     public category_type!: string;
-    public gallery!: string;
-    public featured_image!: string;
+    // public gallery!: string;
+    // public featured_image!: string;
     public city!: string;
     public min_people!: number;
     public booking_period!: number;
@@ -59,8 +59,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public updatedAt!: Date;
     public deposit!: string;
     public allow_cancel!: string;
-    public last_update_by!: string;
-    public country!: string;
+    // public last_update_by!: string;
+    // public country!: string;
 
     static associate(models: any) {
       // Define associations with other models
@@ -69,22 +69,18 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   Product.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-      },
       title: {
         type: DataTypes.STRING,
       },
       video: {
-        type: DataTypes.STRING,
-      },
-      featured_image: {
         type: DataTypes.TEXT("long"),
       },
-      gallery: {
-        type: DataTypes.TEXT("long"),
-      },
+      // featured_image: {
+      //   type: DataTypes.TEXT("long"),
+      // },
+      // gallery: {
+      //   type: DataTypes.TEXT("long"),
+      // },
       overview: {
         type: DataTypes.TEXT("long"),
       },
@@ -100,9 +96,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       state: {
         type: DataTypes.STRING,
       },
-      country: {
-        type: DataTypes.STRING,
-      },
+      // country: {
+      //   type: DataTypes.STRING,
+      // },
       category: {
         type: DataTypes.STRING,
       },
@@ -112,9 +108,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       city: {
         type: DataTypes.STRING,
       },
-      last_update_by: {
-        type: DataTypes.STRING,
-      },
+      // last_update_by: {
+      //   type: DataTypes.STRING,
+      // },
       min_people: {
         type: DataTypes.INTEGER,
       },
