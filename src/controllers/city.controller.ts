@@ -43,7 +43,7 @@ export const findByState = async (
   res: Response
 ): Promise<void> => {
   try {
-    const state = req.params.state;
+    const state = decodeURIComponent(req.params.state);
 
     const data = await City.findOne({
       where: { state_name: state },
