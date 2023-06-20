@@ -38,13 +38,16 @@ export const findAll = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const findOne = async (req: Request, res: Response): Promise<void> => {
+export const findByCountry = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const id = req.params.state;
+    const country = req.params.country;
 
-    const data = await State.findByPk(id);
+    const data = await State.findOne({ where: { country_name: country } });
     if (!data) {
-      res.status(404).send({ message: "Not found blog with id " + id });
+      res.status(404).send({ message: "Not found blog with id " });
     } else {
       res.send(data);
     }
