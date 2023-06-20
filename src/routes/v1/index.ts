@@ -2,6 +2,7 @@ import express from "express";
 import productsRoute from "./products.route";
 import countriesRoute from "./country.route";
 import stateRoute from "./state.route";
+import cityRoute from "./city.route";
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ const defaultRoutes = [
   {
     path: "/states",
     route: stateRoute,
+  },
+  {
+    path: "/cities",
+    route: cityRoute,
   },
 ];
 

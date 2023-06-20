@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import db from "../models";
 
-const State = db.states;
+const City = db.cities;
 
 // Create and Save a new blog
 export const create = async (req: Request, res: Response): Promise<void> => {
@@ -13,7 +13,7 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Save blog in the database
-    const data = await State.create(req.body);
+    const data = await City.create(req.body);
     res.send(data);
   } catch (err: any) {
     res.status(500).send({
@@ -28,7 +28,7 @@ export const findAll = async (req: Request, res: Response): Promise<void> => {
     const content = req.query.content;
     const condition = content ? { state_name: content } : null;
 
-    const data = await State.findAll({ where: condition });
+    const data = await City.findAll({ where: condition });
     res.send(data);
   } catch (err: any) {
     console.log(err);
@@ -45,9 +45,9 @@ export const findByState = async (
   try {
     const state = req.params.state;
 
-    const data = await State.findOne({
+    const data = await City.findOne({
       where: { state_name: state },
-      attributes: ["states"],
+      attributes: ["city_info"],
     });
     if (!data) {
       res.status(404).send({ message: "Not found blog with id " });
@@ -63,42 +63,42 @@ export const update = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;
 
-    const [rowsUpdated] = await State.update(req.body, {
+    const [rowsUpdated] = await City.update(req.body, {
       where: { id: id },
     });
 
     if (rowsUpdated === 0) {
       res.status(404).send({
-        message: `Cannot update State with id=${id}. Maybe State was not found!`,
+        message: `Cannot update City with id=${id}. Maybe City was not found!`,
       });
     } else {
-      res.send({ message: "State was updated successfully." });
+      res.send({ message: "City was updated successfully." });
     }
   } catch (err) {
     res.status(500).send({
-      message: "Error updating State with id=",
+      message: "Error updating City with id=",
     });
   }
 };
 
-export const deleteState = async (
+export const deleteCity = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const id = req.params.id;
 
-    const rowsDeleted = await State.destroy({
+    const rowsDeleted = await City.destroy({
       where: { id: id },
     });
 
     if (rowsDeleted === 0) {
       res.status(404).send({
-        message: `Cannot delete State with id=${id}. Maybe State was not found!`,
+        message: `Cannot delete City with id=${id}. Maybe City was not found!`,
       });
     } else {
       res.send({
-        message: "State was deleted successfully!",
+        message: "City was deleted successfully!",
       });
     }
   } catch (err) {
@@ -110,13 +110,13 @@ export const deleteState = async (
 
 export const deleteAll = async (req: Request, res: Response): Promise<void> => {
   try {
-    const rowsDeleted = await State.destroy({
+    const rowsDeleted = await City.destroy({
       where: {},
       truncate: false,
     });
 
     res.send({
-      message: `${rowsDeleted} States were deleted successfully!`,
+      message: `${rowsDeleted} Citys were deleted successfully!`,
     });
   } catch (err: any) {
     res.status(500).send({
@@ -130,7 +130,7 @@ export const findAllPublished = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await State.findAll({ where: { published: true } });
+    const data = await City.findAll({ where: { published: true } });
     res.send(data);
   } catch (err: any) {
     res.status(500).send({

@@ -4,6 +4,7 @@ const dbConfig = require("../config/db.config.ts");
 const prod = require("./product.model.ts");
 const country = require("./country.model.ts");
 const states = require("./state.model.ts");
+const cities = require("./cities.model.ts");
 
 const DATABASE_CLIENT = "postgres";
 const {
@@ -55,6 +56,7 @@ interface DB {
   product: any;
   countries: any;
   states: any;
+  cities: any;
 }
 
 const db: DB = {
@@ -63,6 +65,7 @@ const db: DB = {
   product: prod(sequelize, Sequelize),
   countries: country(sequelize, Sequelize),
   states: states(sequelize, Sequelize),
+  cities: cities(sequelize, Sequelize),
 };
 
 export default db;
