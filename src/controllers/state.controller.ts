@@ -45,7 +45,10 @@ export const findByCountry = async (
   try {
     const country = req.params.country;
 
-    const data = await State.findOne({ where: { country_name: country } });
+    const data = await State.findOne({
+      where: { country_name: country },
+      attributes: ["states"],
+    });
     if (!data) {
       res.status(404).send({ message: "Not found blog with id " });
     } else {
