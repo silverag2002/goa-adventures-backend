@@ -1,8 +1,11 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 interface ProductAttributes {
-  id: number;
+  id?: number;
   title: string;
+  gallery: string;
+  featured_image: string;
+  allow_cancel: string;
   video: string;
   overview: string;
   duration: string;
@@ -11,18 +14,21 @@ interface ProductAttributes {
   category: string;
   category_type: string;
   city: string;
+  country: string;
   min_people: number;
   booking_period: number;
   max_people: number;
   price: number;
+  deposit: string;
   deposit_value: number;
   discount_percent: number;
   highlight: string;
   activity_inclusion: any[];
   activity_exclusion: any[];
-  start_time: Date;
+  start_time: String;
   createdAt: Date;
   updatedAt: Date;
+  last_update_by: string;
 }
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
@@ -36,6 +42,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public state!: string;
     public category!: string;
     public category_type!: string;
+    public gallery!: string;
+    public featured_image!: string;
     public city!: string;
     public min_people!: number;
     public booking_period!: number;
@@ -46,9 +54,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public highlight!: string;
     public activity_inclusion!: any[];
     public activity_exclusion!: any[];
-    public start_time!: Date;
+    public start_time!: string;
     public createdAt!: Date;
     public updatedAt!: Date;
+    public deposit!: string;
+    public allow_cancel!: string;
+    public last_update_by!: string;
+    public country!: string;
 
     static associate(models: any) {
       // Define associations with other models
@@ -67,6 +79,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       video: {
         type: DataTypes.STRING,
       },
+      featured_image: {
+        type: DataTypes.TEXT("long"),
+      },
+      gallery: {
+        type: DataTypes.TEXT("long"),
+      },
       overview: {
         type: DataTypes.TEXT("long"),
       },
@@ -76,7 +94,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       creator: {
         type: DataTypes.STRING,
       },
+      allow_cancel: {
+        type: DataTypes.STRING,
+      },
       state: {
+        type: DataTypes.STRING,
+      },
+      country: {
         type: DataTypes.STRING,
       },
       category: {
@@ -86,6 +110,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.STRING,
       },
       city: {
+        type: DataTypes.STRING,
+      },
+      last_update_by: {
         type: DataTypes.STRING,
       },
       min_people: {
@@ -116,7 +143,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.JSON,
       },
       start_time: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
+      },
+      deposit: {
+        type: DataTypes.STRING,
       },
       createdAt: {
         field: "created_at",
