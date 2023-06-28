@@ -7,7 +7,8 @@ const Category = db.categories;
 export const create = async (req: Request, res: Response): Promise<void> => {
   try {
     // Validate request
-    if (!req.body.category || req.body.category_image) {
+    console.log("Req", req.body);
+    if (!req.body.category || !req.body.category_image) {
       res.status(400).send({ message: "Content missing in body!" });
       return;
     }

@@ -3,7 +3,7 @@ import { categoryController } from "../../controllers";
 const router = express.Router();
 
 router
-  .route("/:state")
+  .route("/")
   .get(categoryController.findAll)
   .post(categoryController.create);
 

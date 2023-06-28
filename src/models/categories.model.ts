@@ -1,10 +1,9 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 interface CategoryAttributes {
-  id: number;
   category: string;
 
-  category_image: any[];
+  category_image: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,10 +13,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     extends Model<CategoryAttributes>
     implements CategoryAttributes
   {
-    public id!: number;
     public category!: string;
 
-    public category_image!: any[];
+    public category_image!: string;
     public createdAt!: Date;
     public updatedAt!: Date;
 
@@ -28,16 +26,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   Category.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-      },
       category: {
         type: DataTypes.STRING,
       },
 
       category_image: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("long"),
       },
 
       createdAt: {
