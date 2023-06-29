@@ -4,6 +4,7 @@ import countriesRoute from "./country.route";
 import stateRoute from "./state.route";
 import cityRoute from "./city.route";
 import categoryRoute from "./category.route";
+import subCategoryRoute from "./subcategory.route";
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const defaultRoutes = [
   {
     path: "/categories",
     route: categoryRoute,
+  },
+  {
+    path: "/subcategories",
+    route: subCategoryRoute,
   },
 ];
 
