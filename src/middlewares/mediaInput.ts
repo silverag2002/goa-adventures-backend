@@ -27,5 +27,5 @@ const s3 = new S3Client({
 //   },
 // });
 // const upload = multer({ storage: fileStorageEngine });
-const upload = multer();
-module.exports = { upload, s3, randomImageName };
+
+module.exports = { s3, randomImageName };

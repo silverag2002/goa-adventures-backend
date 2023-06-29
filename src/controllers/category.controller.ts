@@ -1,12 +1,34 @@
 import { Request, Response } from "express";
 import db from "../models";
+const mediaInput = require("../middlewares/mediaInput");
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} from "@aws-sdk/client-s3";
 
 const Category = db.categories;
 
 // Create and Save a new blog
-export const create = async (req: Request, res: Response): Promise<void> => {
+export const create = async (req: any, res: Response): Promise<void> => {
   try {
     // Validate request
+    console.log("Working", mediaInput.randomImageName());
+    if (req.files?.categoryImage) {
+      console.log("req.license", req.files.categoryImage);
+      const banner = mediaInput.randomImageName();
+      const params = {
+        Bucket: process.env.BUCKET_NAME,
+        Key: banner,
+        Body: req.files.categoryImage[0].buffer,
+        ContentType: req.files.categoryImage[0].mimetype,
+      };
+      console.log("PArams", params);
+      const command = new PutObjectCommand(params);
+      const response = await mediaInput.s3.send(command);
+      console.log("URl for banner response", response);
+      req.body.category_image = `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${banner}`;
+    }
 
     if (!req.body.category || !req.body.category_image) {
       res.status(400).send({ message: "Content missing in body!" });
