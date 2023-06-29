@@ -13,7 +13,7 @@ const Category = db.categories;
 export const create = async (req: any, res: Response): Promise<void> => {
   try {
     // Validate request
-    console.log("Working", mediaInput.randomImageName());
+    console.log("Working", req.files);
     if (req.files?.categoryImage) {
       console.log("req.license", req.files.categoryImage);
       const banner = mediaInput.randomImageName();
@@ -31,6 +31,7 @@ export const create = async (req: any, res: Response): Promise<void> => {
     }
 
     if (!req.body.category || !req.body.category_image) {
+      console.log("Flailed");
       res.status(400).send({ message: "Content missing in body!" });
       return;
     }
