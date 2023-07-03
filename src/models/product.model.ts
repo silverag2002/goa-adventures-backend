@@ -1,4 +1,8 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
+const categories = require("./categories.model.ts");
+const subcategories = require("./subcategories.model.ts");
+
+// const Category = db.categories;
 
 interface ProductAttributes {
   // id: number;
@@ -27,7 +31,6 @@ interface ProductAttributes {
   activity_inclusion: string[]; //done
   activity_exclusion: string[]; //done
 
-  start_time: String;
   createdAt: Date;
   updatedAt: Date;
   last_update_by: string;
@@ -58,7 +61,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public highlight!: string[];
     public activity_inclusion!: string[];
     public activity_exclusion!: string[];
-    public start_time!: string;
+
     public createdAt!: Date;
     public updatedAt!: Date;
 
@@ -106,12 +109,20 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       state: {
         type: DataTypes.STRING,
       },
-
       category: {
         type: DataTypes.STRING,
+        references: {
+          model: categories,
+          key: "category",
+        },
       },
+
       category_type: {
         type: DataTypes.STRING,
+        references: {
+          model: subcategories,
+          key: "subategory",
+        },
       },
       city: {
         type: DataTypes.STRING,
@@ -146,9 +157,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       },
       activity_exclusion: {
         type: DataTypes.JSON,
-      },
-      start_time: {
-        type: DataTypes.STRING,
       },
 
       createdAt: {
