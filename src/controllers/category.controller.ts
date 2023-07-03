@@ -14,22 +14,33 @@ export const create = async (req: any, res: Response): Promise<void> => {
   try {
     // Validate request
     console.log("Working", req.files);
-    if (req.files?.categoryImage) {
-      console.log("req.license", req.files.categoryImage);
-      const banner = mediaInput.randomImageName();
-      const params = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: banner,
-        Body: req.files.categoryImage[0].buffer,
-        ContentType: req.files.categoryImage[0].mimetype,
-      };
-      console.log("PArams", params);
-      const command = new PutObjectCommand(params);
-      const response = await mediaInput.s3.send(command);
-      console.log("URl for banner response", response);
-      req.body.category_image = `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${banner}`;
-    }
+    // if (req.files?.categoryImage) {
+    //   console.log("req.license", req.files.categoryImage);
+    //   const banner = mediaInput.randomImageName();
+    //   const params = {
+    //     Bucket: process.env.BUCKET_NAME,
+    //     Key: banner,
+    //     Body: req.files.categoryImage[0].buffer,
+    //     ContentType: req.files.categoryImage[0].mimetype,
+    //   };
+    //   console.log("PArams", params);
+    //   const command = new PutObjectCommand(params);
+    //   const response = await mediaInput.s3.send(command);
+    //   console.log("URl for banner response", response);
+    //   req.body.category_image = `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${banner}`;
+    // }
 
+    if (req.files?.categoryImage) {
+      let response = await mediaInput.uploadMedia(req.files.categoryImage[0]);
+
+      if (!response.uploaded) {
+        res.status(500).send({
+          message: "File Could not get uploaded please try again later!",
+        });
+      }
+      req.body.category_image = response.url;
+    }
+    console.log("Req.body", req.body);
     if (!req.body.category || !req.body.category_image) {
       console.log("Flailed");
       res.status(400).send({ message: "Content missing in body!" });
