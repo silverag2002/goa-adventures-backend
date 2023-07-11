@@ -9,6 +9,7 @@ const categories = require("./categories.model.ts");
 const subcategories = require("./subcategories.model.ts");
 const staff = require("./staff.model.ts");
 const customer = require("./customer.model.ts");
+const booking = require("./booking.model.ts");
 
 const DATABASE_CLIENT = "postgres";
 const {
@@ -61,6 +62,7 @@ interface DB {
   countries: any;
   states: any;
   cities: any;
+  booking: any;
   categories: any;
   subcategories: any;
   staff: any;
@@ -78,6 +80,7 @@ const db: DB = {
   subcategories: subcategories(sequelize, Sequelize),
   staff: staff(sequelize, Sequelize),
   customer: customer(sequelize, Sequelize),
+  booking: booking(sequelize, Sequelize),
 };
 
 export default db;
