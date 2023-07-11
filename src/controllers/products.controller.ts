@@ -1,12 +1,62 @@
 import { Request, Response } from "express";
 import db from "../models";
+const mediaInput = require("../middlewares/mediaInput");
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} from "@aws-sdk/client-s3";
 
 const Product = db.product;
 
 // Create and Save a new blog
-export const create = async (req: Request, res: Response): Promise<void> => {
+export const create = async (req: any, res: Response): Promise<void> => {
   try {
     // Validate request
+
+    console.log("Working", req.body);
+
+    if (req.files?.featured_image) {
+      let response = await mediaInput.uploadMedia(req.files.featured_image[0]);
+
+      if (!response.uploaded) {
+        res.status(500).send({
+          message: "File Could not get uploaded please try again later!",
+        });
+      }
+      req.body.featured_image = response.url;
+    }
+    console.log("First one done", req.body.featured_image);
+    if (req.files?.gallery) {
+      let gallery = [];
+      console.log("Gallery array", req.files.gallery);
+      for (let i = 0; i < req.files?.gallery.length; i++) {
+        console.log("buffer", req.files.gallery[i]);
+        let response = await mediaInput.uploadMedia(req.files.gallery[i]);
+
+        if (!response.uploaded) {
+          res.status(500).send({
+            message: "File Could not get uploaded please try again later!",
+          });
+        }
+        gallery.push(response.url);
+        console.log("Gallery image", gallery);
+      }
+      console.log("Final gallery allotment", gallery);
+      req.body.gallery = gallery;
+    }
+    if (req.body.highlight?.length > 3) {
+      req.body.highlight = JSON.parse(req.body.highlight);
+    }
+    if (req.body.activity_inclusion?.length > 3) {
+      req.body.activity_inclusion = JSON.parse(req.body.activity_inclusion);
+    }
+    if (req.body.activity_exclusion?.length > 3) {
+      req.body.activity_exclusion = JSON.parse(req.body.activity_exclusion);
+    }
+    req.body.allow_cancel = Boolean(req.body.allow_cancel);
+    req.body.allow_deposit = Boolean(req.body.allow_deposit);
+
     if (!req.body) {
       res.status(400).send({ message: "Content can not be empty!" });
       return;
