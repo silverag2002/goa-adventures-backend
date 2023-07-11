@@ -25,6 +25,7 @@ export const create = async (req: any, res: Response): Promise<void> => {
       }
       req.body.profile_image = response.url;
     }
+    req.body.active = Boolean(req.body.active);
     console.log("Req.body", req.body);
     if (!req.body) {
       console.log("Flailed");
