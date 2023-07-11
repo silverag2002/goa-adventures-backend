@@ -7,7 +7,7 @@ import {
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
 
-const Booking = db.subcategories;
+const Booking = db.booking;
 
 // Create and Save a new blog
 export const create = async (req: any, res: Response): Promise<void> => {

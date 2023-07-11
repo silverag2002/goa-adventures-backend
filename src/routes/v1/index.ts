@@ -7,6 +7,7 @@ import categoryRoute from "./category.route";
 import subCategoryRoute from "./subcategory.route";
 import staffRoute from "./staff.route";
 import customerRoute from "./customer.route";
+import bookingRoute from "./booking.route";
 
 const router = express.Router();
 
@@ -42,6 +43,10 @@ const defaultRoutes = [
   {
     path: "/customer",
     route: customerRoute,
+  },
+  {
+    path: "/booking",
+    route: bookingRoute,
   },
 ];
 

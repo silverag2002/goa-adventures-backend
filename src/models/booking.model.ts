@@ -16,7 +16,7 @@ interface BookingAttributes {
   booking_date: string;
   start_date: string;
   customer_id: Number;
-  payment_id: string;
+  //   payment_id: string;
   payment_mode: string;
   customer_mobile_number: string;
   destination_location: string;
@@ -38,7 +38,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public booking_date!: string;
     public start_date!: string;
     public customer_id!: Number;
-    public payment_id!: string;
+    // public payment_id!: string;
     public payment_mode!: string;
     public customer_mobile_number!: string;
     public destination_location!: string;
@@ -97,9 +97,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       start_date: {
         type: DataTypes.STRING,
       },
-      payment_id: {
-        type: DataTypes.STRING,
-      },
+      //   payment_id: {
+      //     type: DataTypes.STRING,
+      //   },
       payment_mode: {
         type: DataTypes.STRING,
       },
