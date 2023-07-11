@@ -6,6 +6,7 @@ import cityRoute from "./city.route";
 import categoryRoute from "./category.route";
 import subCategoryRoute from "./subcategory.route";
 import staffRoute from "./staff.route";
+import customerRoute from "./customer.route";
 
 const router = express.Router();
 
@@ -37,6 +38,10 @@ const defaultRoutes = [
   {
     path: "/staff",
     route: staffRoute,
+  },
+  {
+    path: "/customer",
+    route: customerRoute,
   },
 ];
 
