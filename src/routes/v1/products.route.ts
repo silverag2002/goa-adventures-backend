@@ -10,7 +10,7 @@ router
   .post(
     upload.fields([
       { name: "featured_image", maxCount: 1 },
-      { name: "gallery", maxCount: 2 },
+      { name: "gallery", maxCount: 10 },
     ]),
     productsController.create
   );
